@@ -5,6 +5,7 @@ import errorHandlerMiddleware from './middleware/error-handler.js'
 import dotenv from 'dotenv';
 import authRouter from './routes/authRoutes.js'
 import jobsRouter from './routes/jobsRoutes.js'
+import 'express-async-errors'
 
 
 dotenv.config()
