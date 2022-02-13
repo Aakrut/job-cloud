@@ -9,6 +9,15 @@ import 'express-async-errors'
 import morgan from 'morgan'
 import authenticateUser from './middleware/auth.js'
 
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
+
+import helmet from "helmet";
+import xss from "xss-clean";
+import mongoSanitize from "express-mongo-sanitize";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 dotenv.config()
 
@@ -18,10 +27,18 @@ if (process.env.NODE_ENV !== 'production') {
     app.use(morgan('dev'))
 }
 app.use(express.json())
+app.use(helmet());
+app.use(xss());
+app.use(mongoSanitize());
 
+app.use(express.static(path.resolve(__dirname, "./frontend/build")));
 
 app.use("/api/v1/auth", authRouter);
-app.use('/api/v1/jobs',authenticateUser,jobsRouter)
+app.use('/api/v1/jobs', authenticateUser, jobsRouter)
+
+app.get("*", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "./frontend/build", "index.html"));
+});
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
