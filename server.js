@@ -31,13 +31,13 @@ app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
 
-app.use(express.static(path.resolve(__dirname, "./frontend/build")));
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 app.use("/api/v1/auth", authRouter);
 app.use('/api/v1/jobs', authenticateUser, jobsRouter)
 
 app.get("*", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "./frontend/build", "index.html"));
+  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 
 app.use(notFoundMiddleware)

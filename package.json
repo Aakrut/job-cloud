@@ -4,16 +4,13 @@
   "description": "",
   "main": "index.js",
   "type": "module",
-  "engines": {
-    "node": "16.x"
-  },
   "scripts": {
-    "build-client": "cd frontend && npm run build",
-    "install-client": "cd frontend && npm install",
+    "build-client": "cd client && npm run build",
+    "install-client": "cd client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build-client",
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server --ignore client",
-    "client": "npm start --prefix frontend",
+    "client": "npm start --prefix client",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \" npm run client\""
   },
   "keywords": [],
@@ -35,6 +32,9 @@
     "morgan": "^1.10.0",
     "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
+  },
+  "engines": {
+    "node": "16.x"
   },
   "devDependencies": {
     "concurrently": "^7.0.0",
